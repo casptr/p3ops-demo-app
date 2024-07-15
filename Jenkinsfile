@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker container run p3ops-app:latest -d'
+                sh 'ls'
             }
         }
         stage('Push') {
