@@ -47,6 +47,7 @@ pipeline {
                 }
                 stage('Push to Docker Hub') {
                     steps {
+                        echo 'Pushing image to Docker Hub'
                         sh 'echo $DOCKERHUB_CRED_PSW | docker login -u $DOCKERHUB_CRED_USR --password-stdin'
                         sh 'docker push csprt/p3ops-app:latest'
                     }
