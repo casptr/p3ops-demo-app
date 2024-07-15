@@ -31,11 +31,11 @@ pipeline {
             }
         }
         stage('Build & Push app on Dotnet runtime image') {
-            
+
             agent any
 
             environment {
-                DOCKERHUB_CRED = credentials(dockerHub)
+                DOCKERHUB_CRED = credentials('dockerHub')
             }
 
             stages {
