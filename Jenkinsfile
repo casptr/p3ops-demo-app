@@ -8,6 +8,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.dev'
                     dir 'docker'
+                    args '-u root'
                 }
             }
             stages {
