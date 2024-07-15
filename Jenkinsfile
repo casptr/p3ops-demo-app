@@ -2,6 +2,10 @@
 pipeline {
     agent none
 
+    environment {
+        DOCKERHUB_CRED = credentials(dockerHub)
+    }
+
     stages {
         stage('Build & Test app on Dotnet SDK image') {
             agent {
@@ -38,12 +42,8 @@ pipeline {
                 }
                 stage('Push to Docker Hub') {
                     steps {
-                        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'HUB_TOKEN')]) {                      
-                            sh '''
-                                docker login -u csprt -p $HUB_TOKEN 
-                                docker push csprt/p3ops-app:latest
-                            '''
-                        }
+                        sh 'echo $DOCKERHUB_CRED_PSW | docker login -u $DOCKERHUB_CRED_USR --password-stdin'
+                        sh 'docker push csprt/p3ops-app:latest'
                     }
                 }
             }
