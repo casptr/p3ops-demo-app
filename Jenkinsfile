@@ -12,7 +12,7 @@ pipeline {
                 }
             }
             stages {
-               stage('Build app') {
+               stage('Build app on Dotnet SDK image') {
                    steps {
                         echo 'Building app'
                         sh 'dotnet restore src/Server/Server.csproj'
@@ -25,6 +25,30 @@ pipeline {
                         sh 'dotnet test tests/Domain.Tests/Domain.Tests.csproj'
                     }
                }
+               stage('Publish app') {
+                   steps {
+                        echo 'Publishing app'
+                        sh 'dotnet publish src/Server/Server.csproj -c Release -o publish'
+                    }
+               }
+               post {
+                   failure {
+                        echo 'Failed'
+                    }
+               }
+            }
+        }
+        stage('Build & Push app') {
+            agent any
+            stage('Build app on Dotnet runtime image') {
+                steps {
+                    sh 'docker compose build'
+                }
+            }
+            stage('Push app') {
+                steps {
+                    echo 'Pushing app'
+                }
             }
         }
     }
