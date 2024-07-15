@@ -15,6 +15,7 @@ pipeline {
             agent {
                 dockerfile {
                     filename 'Dockerfile.dev'
+                    dir 'docker'
                     label 'dev'
                 }
             }
