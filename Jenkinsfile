@@ -35,14 +35,16 @@ pipeline {
         }
         stage('Build & Push app') {
             agent any
-            stage('Build app on Dotnet runtime image') {
-                steps {
-                    sh 'docker compose build'
+            stages {
+                stage('Build app on Dotnet runtime image') {
+                    steps {
+                        sh 'docker compose build'
+                    }
                 }
-            }
-            stage('Push app') {
-                steps {
-                    echo 'Pushing app'
+                stage('Push app') {
+                    steps {
+                        echo 'Pushing app'
+                    }
                 }
             }
         }
