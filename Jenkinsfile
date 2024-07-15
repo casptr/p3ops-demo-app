@@ -55,6 +55,11 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            sh 'docker logout'
+        }
+    }
 }
 
 // docker image tag p3ops-app:latest $HUB_USER/p3ops-app:latest
