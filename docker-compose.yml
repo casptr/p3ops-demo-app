@@ -6,4 +6,4 @@ services:
     image: p3ops-image
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/Dockerfile.prod

@@ -3,7 +3,7 @@ pipeline {
     agent none
 
     stages {
-        stage('Build & Test app') {
+        stage('Build & Test app on Dotnet SDK image') {
             agent {
                 dockerfile {
                     filename 'Dockerfile.dev'
@@ -12,7 +12,7 @@ pipeline {
                 }
             }
             stages {
-               stage('Build app on Dotnet SDK image') {
+               stage('Build app') {
                    steps {
                         echo 'Building app'
                         sh 'dotnet restore src/Server/Server.csproj'
@@ -25,25 +25,26 @@ pipeline {
                         sh 'dotnet test tests/Domain.Tests/Domain.Tests.csproj'
                     }
                }
-               stage('Publish app') {
-                   steps {
-                        echo 'Publishing app'
-                        sh 'dotnet publish src/Server/Server.csproj -c Release -o publish'
-                    }
-               }
             }
         }
-        stage('Build & Push app') {
+        stage('Build & Push app on Dotnet runtime image') {
             agent any
             stages {
-                stage('Build app on Dotnet runtime image') {
+                stage('Build app production image') {
                     steps {
+                        echo 'Building app Docker image'
                         sh 'docker compose build'
                     }
                 }
-                stage('Push app') {
+                stage('Push to Docker Hub') {
                     steps {
-                        echo 'Pushing app'
+                        withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_TOKEN')]) {                      
+                            sh '''
+                                docker login -u $HUB_USER -p $HUB_TOKEN 
+                                docker image tag p3ops-app:latest $HUB_USER/p3ops-app:latest
+                                docker image push $HUB_USER/p3ops-app:latest
+                            '''
+                        }
                     }
                 }
             }

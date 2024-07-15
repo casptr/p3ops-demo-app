@@ -6,6 +6,7 @@ WORKDIR /src
 COPY src .
 
 RUN dotnet restore Server/Server.csproj
+RUN dotnet build Server/Server.csproj
 RUN dotnet publish -c Release -o /publish Server/Server.csproj
 
 # app image
