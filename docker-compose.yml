@@ -3,7 +3,7 @@ version: "3.7"
 
 services:
   p3ops-app:
-    image: p3ops-image
+    image: csprt/p3ops-app:latest
     build:
       context: .
       dockerfile: ./docker/Dockerfile.prod

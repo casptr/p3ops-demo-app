@@ -33,7 +33,7 @@ pipeline {
                 stage('Build app production image') {
                     steps {
                         echo 'Building app Docker image'
-                        sh 'docker compose build -t csprt/p3ops-app'
+                        sh 'docker compose build'
                     }
                 }
                 stage('Push to Docker Hub') {
@@ -41,7 +41,7 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'HUB_TOKEN')]) {                      
                             sh '''
                                 docker login -u csprt -p $HUB_TOKEN 
-                                docker push $HUB_USER/p3ops-app:latest
+                                docker push csprt/p3ops-app:latest
                             '''
                         }
                     }
