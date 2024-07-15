@@ -31,11 +31,6 @@ pipeline {
                         sh 'dotnet publish src/Server/Server.csproj -c Release -o publish'
                     }
                }
-               post {
-                   failure {
-                        echo 'Failed'
-                    }
-               }
             }
         }
         stage('Build & Push app') {
