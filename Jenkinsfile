@@ -11,24 +11,20 @@ pipeline {
                 '''
             }
         }
-        stage('Build') {
+        stage('Build & Test app') {
             agent {
                 dockerfile {
                     filename 'Dockerfile.dev'
                     dir 'docker'
-                    label 'dev'
                 }
             }
-            steps {
-                echo 'Building dev Docker container'
-            }
-        }
-        stage('Test') {
-            agent {
-                label 'dev'
-            }
-            steps {
-                sh 'ls'
+            stages {
+                stage 'Build app' {
+                    steps {
+                        echo 'Building dev Docker container'
+                        sh 'ls'
+                    }
+                }
             }
         }
         stage('Push') {
