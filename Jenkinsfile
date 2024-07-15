@@ -14,7 +14,14 @@ pipeline {
                stage('Build app') {
                    steps {
                         echo 'Building app'
-                        sh 'ls'
+                        sh 'dotnet restore src/Server/Server.csproj'
+                        sh 'dotnet build src/Server/Server.csproj'
+                    }
+               }
+               stage('Test app') {
+                   steps {
+                        echo 'Running tests on app'
+                        sh 'dotnet test tests/Domain.Tests/Domain.Tests.csproj'
                     }
                }
             }
