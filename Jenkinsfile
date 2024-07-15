@@ -1,16 +1,8 @@
 pipeline {
 
-    agent any
+    agent none
 
     stages {
-        stage('Verify') {
-            steps {
-                sh '''
-                    docker version
-                    docker compose version
-                '''
-            }
-        }
         stage('Build & Test app') {
             agent {
                 dockerfile {
