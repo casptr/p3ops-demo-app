@@ -1,13 +1,11 @@
 
 pipeline {
-    agent none
 
-    environment {
-        DOCKERHUB_CRED = credentials(dockerHub)
-    }
+    agent none
 
     stages {
         stage('Build & Test app on Dotnet SDK image') {
+
             agent {
                 dockerfile {
                     filename 'Dockerfile.dev'
@@ -15,6 +13,7 @@ pipeline {
                     args '-u root'
                 }
             }
+
             stages {
                stage('Build app') {
                    steps {
@@ -32,7 +31,13 @@ pipeline {
             }
         }
         stage('Build & Push app on Dotnet runtime image') {
+            
             agent any
+
+            environment {
+                DOCKERHUB_CRED = credentials(dockerHub)
+            }
+
             stages {
                 stage('Build app production image') {
                     steps {
