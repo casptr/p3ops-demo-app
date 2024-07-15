@@ -12,11 +12,20 @@ pipeline {
             }
         }
         stage('Build') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile.dev'
+                    label 'dev'
+                }
+            }
             steps {
-                sh 'docker compose build'
+                echo 'Building dev Docker container'
             }
         }
         stage('Test') {
+            agent {
+                label 'dev'
+            }
             steps {
                 sh 'ls'
             }
