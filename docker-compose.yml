@@ -1,9 +1,32 @@
 ---
-version: "3.7"
+version: '3.4'
 
-services:
-  p3ops-app:
-    image: csprt/p3ops-app:latest
+services: 
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    environment:
+      - SA_PASSWORD=Str0ngP@ssword
+      - ACCEPT_EULA=Y
+    expose:
+      - 1433
+  server:
+    image: server
+    container_name: server
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+      - DOTNET_ConnectionStrings__SqlDatabase=Server=mssql,1433;Initial Catalog=SportStore;User=SA;Password=Str0ngP@ssword;Trusted_Connection=False;
     build:
       context: .
-      dockerfile: ./docker/Dockerfile.prod
+      dockerfile: docker/Dockerfile.prod
+    ports:
+      - 5001:80
+    expose:
+      - 80
+    depends_on:
+      - mssql
+
+networks:
+  default:
+    name: docker-network
+    external: true
