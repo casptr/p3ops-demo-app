@@ -14,8 +14,8 @@ pipeline {
             }
 
             environment {
-                DISABLE_ERRORS=true
-                LOG_LEVEL=ERROR
+                DISABLE_ERRORS=true // Keeps the pipeline from stopping if errors are found by linter
+                VALIDATE_ALL_CODEBASE=false // Only new or edited files will be parsed for validation
             }
 
             steps {
