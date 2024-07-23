@@ -8,7 +8,7 @@ pipeline {
             agent {
                 docker {
                     image 'oxsecurity/megalinter-dotnetweb:v7.13.0'
-                    args "-u root -e VALIDATE_ALL_CODEBASE=true -v ${env.WORKSPACE}:/tmp/lint --entrypoint=''"
+                    args '-u root -e VALIDATE_ALL_CODEBASE=true -v ${WORKSPACE}:/tmp/lint --entrypoint=""'
                     reuseNode true
                 }
             }
