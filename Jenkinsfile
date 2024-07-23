@@ -4,6 +4,24 @@ pipeline {
     agent none
 
     stages {
+        stage('MegaLinter') {
+            agent {
+                docker {
+                    image 'oxsecurity/megalinter:v7'
+                    args "-u root -e VALIDATE_ALL_CODEBASE=true -v ${WORKSPACE}:/tmp/lint --entrypoint=''"
+                    reuseNode true
+                }
+            }
+            steps {
+                echo 'Running linter on app code'
+                sh '/entrypoint.sh'
+            }
+            post {
+                always {
+                    archiveArtifacts allowEmptyArchive: true, artifacts: 'mega-linter.log,megalinter-reports/**/*', defaultExcludes: false, followSymlinks: false
+                }
+            }
+        }
         stage('Build & Test app on Dotnet SDK image') {
 
             agent {
