@@ -15,6 +15,7 @@ pipeline {
 
             environment {
                 DISABLE_ERRORS=true
+                LOG_LEVEL="ERROR"
             }
 
             steps {
