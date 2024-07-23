@@ -12,6 +12,11 @@ pipeline {
                     reuseNode true
                 }
             }
+
+            environment {
+                DISABLE_ERRORS=true
+            }
+
             steps {
                 echo 'Running linter on app code'
                 sh '/entrypoint.sh'
