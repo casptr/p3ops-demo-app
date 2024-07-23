@@ -4,7 +4,7 @@ pipeline {
     agent none
 
     stages {
-        stage('MegaLinter') {
+        stage('Linting & Static code analysis') {
             agent {
                 docker {
                     image 'oxsecurity/megalinter-cupcake:v7.13.0'
