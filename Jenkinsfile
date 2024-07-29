@@ -66,7 +66,8 @@ pipeline {
                 stage('Build app production image') {
                     steps {
                         echo 'Building app Docker image'
-                        sh 'docker build -t csprt/p3ops-app:latest . -f docker/Dockerfile.prod'
+                        //sh 'docker build -t csprt/p3ops-app:latest . -f docker/Dockerfile.prod'
+                        sh 'docker compose build'
                     }
                 }
                 stage('Push to Docker Hub') {
