@@ -66,7 +66,7 @@ pipeline {
                 stage('Build app production image') {
                     steps {
                         echo 'Building app Docker image'
-                        sh 'docker compose build'
+                        sh 'docker build'
                     }
                 }
                 stage('Push to Docker Hub') {
