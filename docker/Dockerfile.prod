@@ -14,5 +14,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=builder /publish/ .
 
+HEALTHCHECK CMD curl --fail http://localhost:80 || exit
+
 EXPOSE 80
 ENTRYPOINT ["dotnet", "Server.dll"]
