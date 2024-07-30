@@ -14,8 +14,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=builder /publish/ .
 
-RUN apt-get install -y curl
-HEALTHCHECK CMD curl --fail http://localhost:80 || exit
+RUN apt-get update && apt-get install -y curl
 
 EXPOSE 80
 ENTRYPOINT ["dotnet", "Server.dll"]
