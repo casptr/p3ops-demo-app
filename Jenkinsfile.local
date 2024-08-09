@@ -13,12 +13,6 @@ pipeline {
                 }
             }
 
-            // environment {
-            //     DISABLE_ERRORS=true // Keeps the pipeline from stopping if errors are found by linter
-            //     VALIDATE_ALL_CODEBASE=false // Only new or edited files will be parsed for validation
-            //     ENABLE="HTML, REPOSITORY, SPELL"
-            // }
-
             steps {
                 echo 'Running linter on app code'
                 sh '/entrypoint.sh'
